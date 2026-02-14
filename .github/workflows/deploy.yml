@@ -31,6 +31,18 @@ jobs:
           sleep 5
           wget -r -np -nH -P _site --reject-regex '\$\{recipe\.path\}' http://localhost:8080/ || true
           kill $SERVER_PID
+          
+          # Arreglar rutas absolutas a relativas con el base path
+          find _site -name "*.html" -type f -exec sed -i 's|href="/static/|href="/drymemogs-fancy-recipes/static/|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|src="/static/|src="/drymemogs-fancy-recipes/static/|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/recipe/|href="/drymemogs-fancy-recipes/recipe/|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/directory/|href="/drymemogs-fancy-recipes/directory/|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/edit/|href="/drymemogs-fancy-recipes/edit/|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/shopping-list"|href="/drymemogs-fancy-recipes/shopping-list"|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/pantry"|href="/drymemogs-fancy-recipes/pantry"|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/preferences"|href="/drymemogs-fancy-recipes/preferences"|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|href="/new"|href="/drymemogs-fancy-recipes/new"|g' {} +
+          find _site -name "*.html" -type f -exec sed -i 's|action="/api/|action="/drymemogs-fancy-recipes/api/|g' {} +
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
