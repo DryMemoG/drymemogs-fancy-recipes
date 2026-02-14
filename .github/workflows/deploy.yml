@@ -27,9 +27,10 @@ jobs:
       - name: Build site
         run: |
           cook server --port 8080 &
+          SERVER_PID=$!
           sleep 5
-          wget -r -np -nH -P _site http://localhost:8080/
-          pkill cook
+          wget -r -np -nH -P _site --reject-regex '\$\{recipe\.path\}' http://localhost:8080/ || true
+          kill $SERVER_PID
       
       - name: Setup Pages
         uses: actions/configure-pages@v4
